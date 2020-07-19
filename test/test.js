@@ -3,6 +3,5 @@ loader.on('loaded', function(){
 		container: "#app",
 		modules: ['style', 'mobile', 'pc']
 	});
-
-	console.log(temp1.items.map(e=>temp1.isVisible(e)))
 })
+	

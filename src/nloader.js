@@ -1,9 +1,3 @@
-/**
-*	RULES: 
-*
-*	1. DO NOT USE export KEYWOARD as varialble
-* 	2. DO NOT USE export KEYWOARD in exports
-*/
 class nLoader{
 	constructor(path, modules = []){
 		this.path = path;

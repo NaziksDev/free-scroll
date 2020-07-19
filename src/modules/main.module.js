@@ -3,11 +3,11 @@ const main_module = class fs_main{
 		let self = this;
 		let default_options = {
 			container: "",
-			modules: ['style', 'mobile', 'pc']
+			modules: ['mobile', 'pc']
 		}
 
 		this.options = Object.assign(default_options,options);
-		this.modules = [];
+		this.modules = this.constructor.modules;
 		this.nextid = 0;
 
 		if(this.options.container){
@@ -52,12 +52,31 @@ const main_module = class fs_main{
 		let self = this;
 		
 		this.items = Array.from(this.container.children);
-
+		this.items.constructor.prototype.status = Object.create(null);
+		this.items.constructor.prototype.get_status = () => {
+			let v = this.items.reduce((r,e) => {
+				r[e.dataset.fsid] = this.isVisible(e);
+				return r;
+			},{});
+			self.items.status = v;
+			return v;
+		}
 		this.items.forEach(e => {
 			if(e.dataset.hasOwnProperty('fsid')) return;
 			e.dataset['fsid'] = self.nextid;
 			self.nextid += 1;
 		});
+		this.items.get_status();
+	}
+
+	diff(){
+		let old = this.items.status;
+		let new_ = this.items.get_status();
+		return Object.keys(new_).reduce((r,e) => {
+			if(new_[e] == old[e]) return r;
+			r[e] = new_[e];
+			return r;
+		}, {});
 	}
 
 	isVisible(el){
@@ -67,11 +86,11 @@ const main_module = class fs_main{
 	}
 
 	unloadItem(item){
-
+		//...
 	}
 
 	loaditem(item){
-
+		//...
 	}
 }
 
